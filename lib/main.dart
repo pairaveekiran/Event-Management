@@ -27,127 +27,309 @@ class ServingMenuUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: Column(
-        children: [
-          // Header
-          Container(
-            height: 120,
-            width: double.infinity,
-            alignment: Alignment.center,
-            color: Colors.redAccent,
-            child: const Text(
-              "Serving Menu",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+      backgroundColor: const Color(0xFFFFFFFF),
 
-          const SizedBox(height: 40),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
 
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GridView(
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 30,
-                  mainAxisSpacing: 30,
-                  childAspectRatio: 1,
+              // ================= HEADER =================
+
+              Container(
+                width: double.infinity,
+                color: const Color(0xFF1F2A74),
+
+                padding: const EdgeInsets.only(
+                  top: 25,
+                  bottom: 18,
+                  left: 12,
+                  right: 12,
                 ),
-                children: [
-                  MenuButton(
-                    title: "Breakfast",
-                    icon: Icons.free_breakfast,
-                    color: const Color(0xFFF8E1BC),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Breakfast()
-                             ,
-                        ),
-                      );
-                    },
-                  ),
 
-                  MenuButton(
-                    title: "Lunch",
-                    icon: Icons.lunch_dining,
-                    color: const Color(0xFFCFF7B7),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const Lunch(),
-                        ),
-                      );
-                    },
-                  ),
+                child: const Column(
+                  children: [
 
-                  MenuButton(
-                    title: "Dinner",
-                    icon: Icons.restaurant,
-                    color: const Color(0xFFE2B8FF),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const Dinner(),
-                        ),
-                      );
-                    },
-                  ),
+                    Text(
+                      "Association of Alliance Clubs International",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
 
-                  MenuButton(
-                    title: "Tea",
-                    icon: Icons.emoji_food_beverage,
-                    color: const Color(0xFFD5BC96),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const Tea(),
-                        ),
-                      );
-                    },
-                  ),
+                    SizedBox(height: 3),
 
-                  MenuButton(
-                    title: "Drinks",
-                    icon: Icons.local_bar,
-                    color: const Color(0xFFBEEBFF),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const Drinks(),
+                    Text(
+                      "District 1055, Nepal",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+
+                    SizedBox(height: 5),
+
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+
+                      child: Text(
+                        "Alliance Leadership Development Institute(ALDI)-2026",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.yellow,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
-                      );
-                    },
-                  ),
-                ],
+                      ),
+                    ),
+
+                    SizedBox(height: 5),
+
+                    Text(
+                      "2026-06-06, Kahukot Resort, Kahudanda",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+
+              Container(
+                height: 3,
+                color: Colors.yellow,
+              ),
+
+              const SizedBox(height: 20),
+
+              // ================= LOGOS =================
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+
+                child: Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceAround,
+
+                  children: [
+
+                    Image.asset(
+                      "assets/images/club_logo.png",
+                      height: 70,
+                      width: 70,
+                      fit: BoxFit.contain,
+
+                      errorBuilder:
+                          (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.error,
+                          color: Colors.red,
+                          size: 50,
+                        );
+                      },
+                    ),
+
+                    Image.asset(
+                      "assets/images/flag.png",
+                      height: 70,
+                      width: 70,
+                      fit: BoxFit.contain,
+
+                      errorBuilder:
+                          (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.error,
+                          color: Colors.red,
+                          size: 50,
+                        );
+                      },
+                    ),
+
+                    Image.asset(
+                      "assets/images/international_logo.png",
+                      height: 70,
+                      width: 70,
+                      fit: BoxFit.contain,
+
+                      errorBuilder:
+                          (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.error,
+                          color: Colors.red,
+                          size: 50,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              // ================= MAIN BOX =================
+
+              Container(
+                margin: const EdgeInsets.all(18),
+                padding: const EdgeInsets.all(20),
+
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF5F5DD),
+                  borderRadius: BorderRadius.circular(25),
+
+                  border: Border.all(
+                    color: Colors.yellow,
+                    width: 1.2,
+                  ),
+                ),
+
+                child: Column(
+                  children: [
+
+                    // TITLE
+                    const Text(
+                      "Serving Menu",
+                      style: TextStyle(
+                        fontSize: 38,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF273C8F),
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    Container(
+                      height: 4,
+                      width: 270,
+                      color: Colors.red,
+                    ),
+
+                    const SizedBox(height: 35),
+
+                    // ================= GRID =================
+
+                    Wrap(
+                      spacing: 20,
+                      runSpacing: 25,
+                      alignment: WrapAlignment.center,
+
+                      children: [
+
+                        MenuButton(
+                          title: "Breakfast",
+                          icon: Icons.breakfast_dining,
+                          iconColor: Colors.green,
+                          color: const Color(0xFFE9F5D9),
+                          borderColor: Colors.green,
+
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const Breakfast(),
+                              ),
+                            );
+                          },
+                        ),
+
+                        MenuButton(
+                          title: "Lunch",
+                          icon: Icons.lunch_dining,
+                          iconColor: Colors.purple,
+                          color: const Color(0xFFF3E5F5),
+                          borderColor: Colors.purple,
+
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const Lunch(),
+                              ),
+                            );
+                          },
+                        ),
+
+                        MenuButton(
+                          title: "Dinner",
+                          icon: Icons.restaurant,
+                          iconColor: Colors.blue,
+                          color: const Color(0xFFDDEEEF),
+                          borderColor: Colors.blue,
+
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const Dinner(),
+                              ),
+                            );
+                          },
+                        ),
+
+                        MenuButton(
+                          title: "Tea",
+                          icon: Icons.emoji_food_beverage,
+                          iconColor: Colors.brown,
+                          color: const Color(0xFFF3E8C9),
+                          borderColor: Colors.brown,
+
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const Tea(),
+                              ),
+                            );
+                          },
+                        ),
+
+                        MenuButton(
+                          title: "Drinks",
+                          icon: Icons.local_bar,
+                          iconColor: Colors.orange,
+                          color: const Color(0xFFF9EDBE),
+                          borderColor: Colors.orange,
+
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const Drinks(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 }
 
 class MenuButton extends StatelessWidget {
+
   final String title;
   final IconData icon;
   final Color color;
+  final Color borderColor;
+  final Color iconColor;
   final VoidCallback onTap;
 
   const MenuButton({
@@ -155,72 +337,62 @@ class MenuButton extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.color,
+    required this.borderColor,
+    required this.iconColor,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: onTap,
+
       child: Container(
+        width: 125,
+        height: 125,
+
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(18),
+
+          borderRadius: BorderRadius.circular(20),
+
           border: Border.all(
-            color: Colors.orange,
-            width: 1,
+            color: borderColor,
+            width: 1.2,
           ),
+
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
-              blurRadius: 4,
-              offset: const Offset(2, 3),
+              blurRadius: 5,
+              offset: const Offset(2, 4),
             ),
           ],
         ),
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+
           children: [
+
             Icon(
               icon,
-              size: 40,
-              color: Colors.black87,
+              size: 45,
+              color: iconColor,
             ),
+
             const SizedBox(height: 10),
+
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 22,
+              style: TextStyle(
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
+                color: iconColor,
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-// Common Screen
-class FoodScreen extends StatelessWidget {
-  final String title;
-
-  const FoodScreen({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.redAccent,
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-          ),
         ),
       ),
     );

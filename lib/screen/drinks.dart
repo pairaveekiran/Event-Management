@@ -1,7 +1,8 @@
+import 'package:event_management/screen/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-import '../main.dart';
+
 
 class Drinks extends StatefulWidget {
   const Drinks({super.key});

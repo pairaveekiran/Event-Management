@@ -1,9 +1,7 @@
-import 'package:event_management/screen/breakfast.dart';
-import 'package:event_management/screen/dinner.dart';
-import 'package:event_management/screen/drinks.dart';
-import 'package:event_management/screen/lunch.dart';
-import 'package:event_management/screen/tea.dart';
+import 'package:event_management/screen/homescreen.dart';
 import 'package:flutter/material.dart';
+
+
 
 void main() {
   runApp(const MyApp());
@@ -16,16 +14,33 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ServingMenuUI(),
+      home: LandingPage(),
     );
   }
 }
 
-class ServingMenuUI extends StatelessWidget {
-  const ServingMenuUI({super.key});
+class LandingPage extends StatefulWidget {
+  const LandingPage({super.key});
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+
+  String? selectedEvent;
+
+  final List<String> events = [
+    "Breakfast",
+    "Lunch",
+    "Dinner",
+    "Tea",
+    "Drinks",
+  ];
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
 
@@ -53,6 +68,7 @@ class ServingMenuUI extends StatelessWidget {
                     Text(
                       "Association of Alliance Clubs International",
                       textAlign: TextAlign.center,
+
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -60,42 +76,29 @@ class ServingMenuUI extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox(height: 3),
+                    SizedBox(height: 8),
 
                     Text(
                       "District 1055, Nepal",
                       textAlign: TextAlign.center,
+
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
 
-                    SizedBox(height: 5),
-
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-
-                      child: Text(
-                        "Alliance Leadership Development Institute(ALDI)-2026",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.yellow,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 5),
+                    SizedBox(height: 8),
 
                     Text(
                       "2026-06-06, Kahukot Resort, Kahudanda",
                       textAlign: TextAlign.center,
+
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -103,20 +106,22 @@ class ServingMenuUI extends StatelessWidget {
               ),
 
               Container(
-                height: 3,
+                height: 4,
                 color: Colors.yellow,
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
 
               // ================= LOGOS =================
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                ),
 
                 child: Row(
                   mainAxisAlignment:
-                      MainAxisAlignment.spaceAround,
+                      MainAxisAlignment.spaceBetween,
 
                   children: [
 
@@ -125,15 +130,6 @@ class ServingMenuUI extends StatelessWidget {
                       height: 70,
                       width: 70,
                       fit: BoxFit.contain,
-
-                      errorBuilder:
-                          (context, error, stackTrace) {
-                        return const Icon(
-                          Icons.error,
-                          color: Colors.red,
-                          size: 50,
-                        );
-                      },
                     ),
 
                     Image.asset(
@@ -141,15 +137,6 @@ class ServingMenuUI extends StatelessWidget {
                       height: 70,
                       width: 70,
                       fit: BoxFit.contain,
-
-                      errorBuilder:
-                          (context, error, stackTrace) {
-                        return const Icon(
-                          Icons.error,
-                          color: Colors.red,
-                          size: 50,
-                        );
-                      },
                     ),
 
                     Image.asset(
@@ -157,31 +144,28 @@ class ServingMenuUI extends StatelessWidget {
                       height: 70,
                       width: 70,
                       fit: BoxFit.contain,
-
-                      errorBuilder:
-                          (context, error, stackTrace) {
-                        return const Icon(
-                          Icons.error,
-                          color: Colors.red,
-                          size: 50,
-                        );
-                      },
                     ),
                   ],
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
 
-              // ================= MAIN BOX =================
+              // ================= MAIN CONTAINER =================
 
               Container(
-                margin: const EdgeInsets.all(18),
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+
                 padding: const EdgeInsets.all(20),
 
+                height: 450,
+
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF5F5DD),
-                  borderRadius: BorderRadius.circular(25),
+                  color: const Color(0xFFF3F1D9),
+
+                  borderRadius: BorderRadius.circular(28),
 
                   border: Border.all(
                     color: Colors.yellow,
@@ -192,207 +176,144 @@ class ServingMenuUI extends StatelessWidget {
                 child: Column(
                   children: [
 
-                    // TITLE
+                    // ================= TITLE =================
+
                     const Text(
-                      "Serving Menu",
+                      "Choose Event",
+
                       style: TextStyle(
-                        fontSize: 38,
+                        fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF273C8F),
+                        color: Color(0xFF1F2A74),
                       ),
                     ),
 
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 25),
+
+                    // ================= DROPDOWN =================
 
                     Container(
-                      height: 4,
-                      width: 270,
-                      color: Colors.red,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                      ),
+
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFFFFF),
+
+                        borderRadius:
+                            BorderRadius.circular(22),
+
+                        border: Border.all(
+                          color: Colors.black87,
+                        ),
+                      ),
+
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: selectedEvent,
+
+                          hint: const Text(
+                            "Select Event",
+
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+
+                          isExpanded: true,
+
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down,
+                          ),
+
+                          items: events.map((String event) {
+
+                            return DropdownMenuItem<String>(
+                              value: event,
+
+                              child: Text(
+                                event,
+
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+
+                          onChanged: (String? newValue) {
+
+                            setState(() {
+                              selectedEvent = newValue;
+                            });
+                          },
+                        ),
+                      ),
                     ),
 
-                    const SizedBox(height: 35),
+                    const Spacer(),
 
-                    // ================= GRID =================
+                    // ================= BUTTON =================
 
-                    Wrap(
-                      spacing: 20,
-                      runSpacing: 25,
-                      alignment: WrapAlignment.center,
+                    SizedBox(
+                      width: 180,
+                      height: 75,
 
-                      children: [
+                      child: ElevatedButton(
+                        onPressed: () {
 
-                        MenuButton(
-                          title: "Breakfast",
-                          icon: Icons.breakfast_dining,
-                          iconColor: Colors.green,
-                          color: const Color(0xFFE9F5D9),
-                          borderColor: Colors.green,
+                          if (selectedEvent == null) {
 
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const Breakfast(),
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(
+
+                              const SnackBar(
+                                content: Text(
+                                  "Please select an event",
+                                ),
                               ),
                             );
-                          },
+
+                            return;
+                          }
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ServingMenuUI(),
+                            ),
+                          );
+                        },
+
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color(0xFFD7263D),
+
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(22),
+                          ),
                         ),
 
-                        MenuButton(
-                          title: "Lunch",
-                          icon: Icons.lunch_dining,
-                          iconColor: Colors.purple,
-                          color: const Color(0xFFF3E5F5),
-                          borderColor: Colors.purple,
+                        child: const Text(
+                          "Submit",
 
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const Lunch(),
-                              ),
-                            );
-                          },
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
-
-                        MenuButton(
-                          title: "Dinner",
-                          icon: Icons.restaurant,
-                          iconColor: Colors.blue,
-                          color: const Color(0xFFDDEEEF),
-                          borderColor: Colors.blue,
-
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const Dinner(),
-                              ),
-                            );
-                          },
-                        ),
-
-                        MenuButton(
-                          title: "Tea",
-                          icon: Icons.emoji_food_beverage,
-                          iconColor: Colors.brown,
-                          color: const Color(0xFFF3E8C9),
-                          borderColor: Colors.brown,
-
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const Tea(),
-                              ),
-                            );
-                          },
-                        ),
-
-                        MenuButton(
-                          title: "Drinks",
-                          icon: Icons.local_bar,
-                          iconColor: Colors.orange,
-                          color: const Color(0xFFF9EDBE),
-                          borderColor: Colors.orange,
-
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const Drinks(),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
               ),
+
+              const SizedBox(height: 40),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class MenuButton extends StatelessWidget {
-
-  final String title;
-  final IconData icon;
-  final Color color;
-  final Color borderColor;
-  final Color iconColor;
-  final VoidCallback onTap;
-
-  const MenuButton({
-    super.key,
-    required this.title,
-    required this.icon,
-    required this.color,
-    required this.borderColor,
-    required this.iconColor,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-
-    return GestureDetector(
-      onTap: onTap,
-
-      child: Container(
-        width: 125,
-        height: 125,
-
-        decoration: BoxDecoration(
-          color: color,
-
-          borderRadius: BorderRadius.circular(20),
-
-          border: Border.all(
-            color: borderColor,
-            width: 1.2,
-          ),
-
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 5,
-              offset: const Offset(2, 4),
-            ),
-          ],
-        ),
-
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-
-          children: [
-
-            Icon(
-              icon,
-              size: 45,
-              color: iconColor,
-            ),
-
-            const SizedBox(height: 10),
-
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: iconColor,
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -1,7 +1,8 @@
+import 'package:event_management/screen/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-import '../main.dart';
+
 
 class Breakfast extends StatefulWidget {
   const Breakfast({super.key});
@@ -214,7 +215,7 @@ class _BreakfastState extends State<Breakfast> {
                       Container(
                         height: 3,
                         width: double.infinity,
-                        color: Colors.green,
+                        color: const Color.fromARGB(255, 3, 112, 6),
                       ),
 
                       const SizedBox(height: 30),

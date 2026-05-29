@@ -3,10 +3,16 @@ class EventCategory {
       id;
   final String
       title;
+  final String
+      date;
+  final String
+      venue;
 
   const EventCategory({
     required this.id,
     required this.title,
+    required this.date,
+    required this.venue,
   });
 
   factory EventCategory.fromJson(
@@ -17,10 +23,18 @@ class EventCategory {
     final dynamic
         rawTitle =
         json['title'];
+    final dynamic
+        rawDate =
+        json['date'];
+    final dynamic
+        rawVenue =
+        json['vennue'] ?? json['venue'];
 
     return EventCategory(
       id: rawId is int ? rawId : int.parse(rawId.toString()),
       title: rawTitle?.toString() ?? '',
+      date: rawDate?.toString().trim() ?? '',
+      venue: rawVenue?.toString().trim() ?? '',
     );
   }
 
@@ -30,6 +44,8 @@ class EventCategory {
         dynamic>{
       'id': id,
       'title': title,
+      'date': date,
+      'vennue': venue,
     };
   }
 }

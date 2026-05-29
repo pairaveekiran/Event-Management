@@ -6,10 +6,16 @@ class Dinner
     extends StatefulWidget {
   const Dinner(
       {super.key,
-      this.categoryTitle});
+      this.categoryTitle,
+      this.categoryDate,
+      this.categoryVenue});
 
   final String?
       categoryTitle;
+    final String?
+      categoryDate;
+  final String?
+      categoryVenue;
 
   @override
   State<Dinner> createState() =>
@@ -47,6 +53,8 @@ class _DinnerState
       MaterialPageRoute(
         builder: (context) => ServingMenuUI(
           categoryTitle: widget.categoryTitle,
+          categoryDate: widget.categoryDate,
+          categoryVenue: widget.categoryVenue,
         ),
       ),
       (route) => false,
@@ -59,6 +67,12 @@ class _DinnerState
     final String
         headerTitle =
         widget.categoryTitle ?? "Alliance Leadership Development Institute(ALDI)-2026";
+    final String headerDate =
+      (widget.categoryDate?.trim().isNotEmpty ?? false) ? widget.categoryDate!.trim() : "Date not available";
+    final String headerVenue = (widget.categoryVenue?.trim().isNotEmpty ?? false)
+        ? widget.categoryVenue!.trim()
+        : "Venue not available";
+    final String headerDateVenue = '$headerDate, $headerVenue';
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
         if (details.delta.dx > 15) {
@@ -140,10 +154,10 @@ class _DinnerState
                         ),
                       ),
                       const SizedBox(height: 5),
-                      const Text(
-                        "2026-06-06, Kahukot Resort, Kahudanda",
+                      Text(
+                        headerDateVenue,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
                         ),

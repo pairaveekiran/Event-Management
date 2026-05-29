@@ -93,6 +93,8 @@ class _EventDropdownScreenState
           // FIXED
           categoryId: category.id, // FIXED
           categoryTitle: category.title, // FIXED
+          categoryDate: category.date, // FIXED
+          categoryVenue: category.venue.trim(), // FIXED
         ), // FIXED
       ),
     );

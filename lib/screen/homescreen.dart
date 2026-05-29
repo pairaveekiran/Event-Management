@@ -10,12 +10,18 @@ class ServingMenuUI
   const ServingMenuUI(
       {super.key,
       this.categoryId,
-      this.categoryTitle});
+      this.categoryTitle,
+      this.categoryDate,
+      this.categoryVenue});
 
   final int?
       categoryId;
   final String?
       categoryTitle;
+    final String?
+      categoryDate;
+  final String?
+      categoryVenue;
 
   @override
   Widget
@@ -23,6 +29,12 @@ class ServingMenuUI
     final String
         headerTitle =
         categoryTitle ?? 'Alliance Leadership Development Institute(ALDI)-2026';
+    final String headerDate =
+      (categoryDate?.trim().isNotEmpty ?? false) ? categoryDate!.trim() : 'Date not available';
+    final String headerVenue = (categoryVenue?.trim().isNotEmpty ?? false)
+        ? categoryVenue!.trim()
+        : 'Venue not available';
+    final String headerDateVenue = '$headerDate, $headerVenue';
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -48,7 +60,11 @@ class ServingMenuUI
                       children: [
                         IconButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/',
+                              (route) => false,
+                            );
                           },
                           icon: const Icon(
                             Icons.arrow_back_ios_new_rounded,
@@ -102,10 +118,10 @@ class ServingMenuUI
                       ),
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      "2026-06-06, Kahukot Resort, Kahudanda",
+                    Text(
+                      headerDateVenue,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                       ),
@@ -227,6 +243,8 @@ class ServingMenuUI
                               MaterialPageRoute(
                                 builder: (context) => Breakfast(
                                   categoryTitle: headerTitle,
+                                  categoryDate: headerDate,
+                                  categoryVenue: headerVenue,
                                 ),
                               ),
                             );
@@ -244,6 +262,8 @@ class ServingMenuUI
                               MaterialPageRoute(
                                 builder: (context) => Lunch(
                                   categoryTitle: headerTitle,
+                                  categoryDate: headerDate,
+                                  categoryVenue: headerVenue,
                                 ),
                               ),
                             );
@@ -261,6 +281,8 @@ class ServingMenuUI
                               MaterialPageRoute(
                                 builder: (context) => Dinner(
                                   categoryTitle: headerTitle,
+                                  categoryDate: headerDate,
+                                  categoryVenue: headerVenue,
                                 ),
                               ),
                             );
@@ -278,6 +300,8 @@ class ServingMenuUI
                               MaterialPageRoute(
                                 builder: (context) => Tea(
                                   categoryTitle: headerTitle,
+                                  categoryDate: headerDate,
+                                  categoryVenue: headerVenue,
                                 ),
                               ),
                             );
@@ -295,6 +319,8 @@ class ServingMenuUI
                               MaterialPageRoute(
                                 builder: (context) => Drinks(
                                   categoryTitle: headerTitle,
+                                  categoryDate: headerDate,
+                                  categoryVenue: headerVenue,
                                 ),
                               ),
                             );

@@ -235,7 +235,6 @@ class _DinnerState
 
                       MealScanScreen(
                         mealType: 'DC',
-                        mealLabel: 'Dinner',
                         eventId: widget.categoryId ?? 0,
                         accentColor: const Color(0xFF0288d1),
                       ),

@@ -2,13 +2,12 @@ import 'package:event_management/services/event_service.dart';
 import 'package:event_management/models/meal_order_response.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MealScanScreen
     extends StatefulWidget {
   final String
       mealType;
-  final String
-      mealLabel;
   final int
       eventId;
   final Color
@@ -16,7 +15,6 @@ class MealScanScreen
 
   const MealScanScreen({
     required this.mealType,
-    required this.mealLabel,
     required this.eventId,
     required this.accentColor,
     super.key,
@@ -39,17 +37,20 @@ class _MealScanScreenState
   bool
       _hasScanned =
       false; // KEY FIX: prevents duplicate scans
-
+  bool
+      _hasCameraPermission =
+      false;
+  bool
+      _isCheckingPermission =
+      true;
   String?
-      _scannedMembership;
+      _permissionMessage;
 
   @override
   void
       initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _cameraController.start();
-    });
+    _prepareCamera();
   }
 
   @override
@@ -57,6 +58,49 @@ class _MealScanScreenState
       dispose() {
     _cameraController.dispose();
     super.dispose();
+  }
+
+  Future<void>
+      _prepareCamera() async {
+    final PermissionStatus status = await Permission.camera.status;
+
+    if (!mounted) {
+      return;
+    }
+
+    if (status.isGranted) {
+      setState(() {
+        _hasCameraPermission = true;
+        _isCheckingPermission = false;
+        _permissionMessage = null;
+      });
+      await _cameraController.start();
+      return;
+    }
+
+    final PermissionStatus requestStatus = await Permission.camera.request();
+
+    if (!mounted) {
+      return;
+    }
+
+    if (requestStatus.isGranted) {
+      setState(() {
+        _hasCameraPermission = true;
+        _isCheckingPermission = false;
+        _permissionMessage = null;
+      });
+      await _cameraController.start();
+      return;
+    }
+
+    setState(() {
+      _hasCameraPermission = false;
+      _isCheckingPermission = false;
+      _permissionMessage = requestStatus.isPermanentlyDenied
+          ? 'Camera permission is permanently denied. Open app settings to allow QR scanning.'
+          : 'Camera permission is required to scan QR codes.';
+    });
   }
 
   String
@@ -105,9 +149,6 @@ class _MealScanScreenState
     if (!mounted) {
       return;
     }
-    setState(() =>
-        _scannedMembership = membershipNo);
-
     await _processMealOrder(membershipNo);
   }
 
@@ -311,10 +352,13 @@ class _MealScanScreenState
     setState(() {
       _hasScanned = false;
       _isProcessing = false;
-      _scannedMembership = null;
     });
 
-    return _cameraController.start();
+    if (_hasCameraPermission) {
+      return _cameraController.start();
+    }
+
+    return _prepareCamera();
   }
 
   @override
@@ -323,19 +367,78 @@ class _MealScanScreenState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.mealLabel,
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w800,
-            color: widget.accentColor,
-          ),
-        ),
-        const SizedBox(height: 10),
         SizedBox(
           height: 340,
           width: double.infinity,
-          child: _isProcessing
+          child: _isCheckingPermission
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : !_hasCameraPermission
+                  ? Container(
+                      width: double.infinity,
+                      height: 340,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFF8F8),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFFE57373)),
+                      ),
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.no_photography_outlined,
+                            color: Color(0xFFB71C1C),
+                            size: 52,
+                          ),
+                          const SizedBox(height: 14),
+                          Text(
+                            _permissionMessage ?? 'Camera permission is required to scan QR codes.',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFFB71C1C),
+                              height: 1.4,
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                          ElevatedButton(
+                            onPressed: () async {
+                              final PermissionStatus status = await Permission.camera.request();
+                              if (!mounted) {
+                                return;
+                              }
+
+                              if (status.isGranted) {
+                                await _prepareCamera();
+                                return;
+                              }
+
+                              if (status.isPermanentlyDenied) {
+                                await openAppSettings();
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF1F2A74),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text(
+                              'ALLOW CAMERA',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : _isProcessing
               ? Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -351,21 +454,28 @@ class _MealScanScreenState
                   child: MobileScanner(
                     controller: _cameraController,
                     onDetect: _onQRDetected, // KEY FIX: stop on first detection
+                    errorBuilder: (context, error, child) {
+                      return Container(
+                        width: double.infinity,
+                        height: 340,
+                        color: Colors.black,
+                        alignment: Alignment.center,
+                        child: const Padding(
+                          padding: EdgeInsets.all(24),
+                          child: Text(
+                            'Camera unavailable. Check camera permission and device support.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
-        ),
-        const SizedBox(height: 30),
-        const Text(
-          'Name:',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          _scannedMembership ?? '',
-          style: const TextStyle(fontSize: 20),
         ),
       ],
     );

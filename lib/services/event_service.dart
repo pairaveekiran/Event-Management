@@ -133,19 +133,20 @@ class EventService {
         body: jsonEncode(body),
       );
 
-      if (response.statusCode < 200 || response.statusCode >= 300) {
-        final dynamic decoded = jsonDecode(response.body);
-        final message = decoded is Map && decoded['message'] != null ? decoded['message'].toString() : 'Server returned status ${response.statusCode}';
-        throw Exception(message);
-      }
-
       final dynamic decodedBody = jsonDecode(response.body);
 
       if (decodedBody is! Map<String, dynamic>) {
         throw Exception('Invalid response format from the meal order API.');
       }
 
-      return MealOrderResponse.fromJson(decodedBody);
+      final MealOrderResponse parsedResponse = MealOrderResponse.fromJson(decodedBody);
+
+      return MealOrderResponse(
+        status: response.statusCode == 200,
+        message: parsedResponse.message,
+        membershipNo: parsedResponse.membershipNo,
+        mealType: parsedResponse.mealType,
+      );
     } on FormatException catch (error) {
       throw Exception('Unable to parse the meal order response: ${error.message}');
     } on http

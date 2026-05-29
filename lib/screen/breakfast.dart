@@ -269,7 +269,6 @@ class _BreakfastState
                       // MealScanScreen
                       MealScanScreen(
                         mealType: 'BFC',
-                        mealLabel: 'Breakfast',
                         eventId: widget.categoryId ?? 0,
                         accentColor: const Color(0xFF2d5a27),
                       ),

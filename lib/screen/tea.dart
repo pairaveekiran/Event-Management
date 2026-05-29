@@ -247,7 +247,6 @@ class _TeaState
 
                       MealScanScreen(
                         mealType: 'TC',
-                        mealLabel: 'Tea',
                         eventId: widget.categoryId ?? 0,
                         accentColor: const Color(0xFF5d4037),
                       ),

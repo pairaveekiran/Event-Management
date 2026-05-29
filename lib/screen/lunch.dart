@@ -246,7 +246,6 @@ class _LunchState
 
                       MealScanScreen(
                         mealType: 'LC',
-                        mealLabel: 'Lunch',
                         eventId: widget.categoryId ?? 0,
                         accentColor: const Color(0xFF7b1fa2),
                       ),

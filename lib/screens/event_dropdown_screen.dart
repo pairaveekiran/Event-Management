@@ -2,6 +2,7 @@ import 'package:event_management/models/event_category.dart';
 import 'package:event_management/screen/homescreen.dart';
 import 'package:event_management/services/event_service.dart';
 import 'package:flutter/material.dart';
+import 'package:event_management/widgets/app_credit_footer.dart';
 
 class EventDropdownScreen
     extends StatefulWidget {
@@ -106,6 +107,7 @@ class _EventDropdownScreenState
     // FIXED
     return Scaffold(
       backgroundColor: const Color(0xFFF6F4E8), // FIXED
+      bottomNavigationBar: const AppCreditFooter(),
       body: SafeArea(
         child: SingleChildScrollView(
           // FIXED
@@ -217,6 +219,13 @@ class _EventDropdownScreenState
                           width: 70, // FIXED
                           fit: BoxFit.contain, // FIXED
                         ), // FIXED
+                          Image.asset(
+                          // FIXED
+                          'assets/images/international_logo.png', // FIXED
+                          height: 70, // FIXED
+                          width: 70, // FIXED
+                          fit: BoxFit.contain, // FIXED
+                        ), // FIXED
                         Image.asset(
                           // FIXED
                           'assets/images/flag.png', // FIXED
@@ -224,13 +233,7 @@ class _EventDropdownScreenState
                           width: 70, // FIXED
                           fit: BoxFit.contain, // FIXED
                         ), // FIXED
-                        Image.asset(
-                          // FIXED
-                          'assets/images/international_logo.png', // FIXED
-                          height: 70, // FIXED
-                          width: 70, // FIXED
-                          fit: BoxFit.contain, // FIXED
-                        ), // FIXED
+                      
                       ], // FIXED
                     ), // FIXED
                   ), // FIXED

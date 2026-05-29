@@ -23,7 +23,7 @@ class MealOrderResponse {
     return MealOrderResponse(
       status: json['status'] == true,
       message: json['message']?.toString() ?? '',
-      membershipNo: orderDetails != null && orderDetails['member_membership_no'] != null ? orderDetails['member_membership_no'].toString() : null,
+      membershipNo: orderDetails != null && orderDetails['event_register_member_id'] != null ? orderDetails['event_register_member_id'].toString() : null,
       mealType: orderDetails != null && orderDetails['meal_type'] != null ? orderDetails['meal_type'].toString() : null,
     );
   }

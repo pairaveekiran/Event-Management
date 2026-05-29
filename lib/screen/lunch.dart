@@ -1,5 +1,6 @@
 import 'package:event_management/screen/homescreen.dart';
 import 'package:flutter/material.dart';
+import 'package:event_management/widgets/app_credit_footer.dart';
 import 'package:event_management/screens/meal_scan_screen.dart';
 
 class Lunch
@@ -71,6 +72,7 @@ class _LunchState
       },
       child: Scaffold(
         backgroundColor: const Color(0xFFFFFFFF),
+        bottomNavigationBar: const AppCreditFooter(),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -185,14 +187,15 @@ class _LunchState
                         width: 70,
                         fit: BoxFit.contain,
                       ),
+                    
                       Image.asset(
-                        "assets/images/flag.png",
+                        "assets/images/international_logo.png",
                         height: 70,
                         width: 70,
                         fit: BoxFit.contain,
                       ),
-                      Image.asset(
-                        "assets/images/international_logo.png",
+                        Image.asset(
+                        "assets/images/flag.png",
                         height: 70,
                         width: 70,
                         fit: BoxFit.contain,

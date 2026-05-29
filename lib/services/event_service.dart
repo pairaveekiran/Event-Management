@@ -122,7 +122,7 @@ class EventService {
     try {
       final body = {
         'meal_type': mealType,
-        'member_membership_no': membershipNo,
+        'event_register_member_id': membershipNo,
       };
 
       final http.Response response = await http.post(

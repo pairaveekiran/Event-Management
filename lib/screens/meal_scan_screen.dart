@@ -47,7 +47,9 @@ class _MealScanScreenState
   void
       initState() {
     super.initState();
-    _cameraController.start();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _cameraController.start();
+    });
   }
 
   @override
@@ -72,6 +74,10 @@ class _MealScanScreenState
     // STEP 1: Guard — ignore if already scanned or processing
     if (_hasScanned || _isProcessing) {
       return; // KEY FIX: ignore subsequent detections
+    }
+
+    if (capture.barcodes.isEmpty) {
+      return;
     }
 
     final String?
@@ -300,14 +306,15 @@ class _MealScanScreenState
     );
   }
 
-  void
+  Future<void>
       _resetScanner() {
     setState(() {
       _hasScanned = false;
       _isProcessing = false;
       _scannedMembership = null;
     });
-    _cameraController.start(); // restart camera for next scan
+
+    return _cameraController.start();
   }
 
   @override
@@ -316,6 +323,15 @@ class _MealScanScreenState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          widget.mealLabel,
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w800,
+            color: widget.accentColor,
+          ),
+        ),
+        const SizedBox(height: 10),
         SizedBox(
           height: 340,
           width: double.infinity,

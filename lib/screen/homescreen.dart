@@ -6,6 +6,7 @@ import 'package:event_management/screen/tea.dart';
 import 'package:event_management/models/meals_config.dart';
 import 'package:event_management/services/event_service.dart';
 import 'package:flutter/material.dart';
+import 'package:event_management/widgets/app_credit_footer.dart';
 
 class ServingMenuUI
     extends StatefulWidget {
@@ -302,6 +303,7 @@ class _ServingMenuUIState
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
+      bottomNavigationBar: const AppCreditFooter(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -421,8 +423,9 @@ class _ServingMenuUIState
                         );
                       },
                     ),
+                   
                     Image.asset(
-                      "assets/images/flag.png",
+                      "assets/images/international_logo.png",
                       height: 58,
                       width: 58,
                       fit: BoxFit.contain,
@@ -434,8 +437,8 @@ class _ServingMenuUIState
                         );
                       },
                     ),
-                    Image.asset(
-                      "assets/images/international_logo.png",
+                     Image.asset(
+                      "assets/images/flag.png",
                       height: 58,
                       width: 58,
                       fit: BoxFit.contain,

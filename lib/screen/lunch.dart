@@ -1,15 +1,18 @@
 import 'package:event_management/screen/homescreen.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:event_management/screens/meal_scan_screen.dart';
 
 class Lunch
     extends StatefulWidget {
   const Lunch(
       {super.key,
+      this.categoryId,
       this.categoryTitle,
       this.categoryDate,
       this.categoryVenue});
 
+  final int?
+      categoryId;
   final String?
       categoryTitle;
   final String?
@@ -24,27 +27,9 @@ class Lunch
 
 class _LunchState
     extends State<Lunch> {
-  final MobileScannerController
-      controller =
-      MobileScannerController();
-
   String
       foodName =
       "";
-
-  @override
-  void
-      initState() {
-    super.initState();
-    controller.start();
-  }
-
-  @override
-  void
-      dispose() {
-    controller.dispose();
-    super.dispose();
-  }
 
   void
       goToMainPage() {
@@ -52,6 +37,7 @@ class _LunchState
       context,
       MaterialPageRoute(
         builder: (context) => ServingMenuUI(
+          categoryId: widget.categoryId,
           categoryTitle: widget.categoryTitle,
           categoryDate: widget.categoryDate,
           categoryVenue: widget.categoryVenue,
@@ -177,8 +163,14 @@ class _LunchState
                 ),
 
                 const SizedBox(height: 20),
-
-                // ================= LOGOS =================
+                Text(
+                  headerDateVenue,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -249,50 +241,11 @@ class _LunchState
 
                       const SizedBox(height: 30),
 
-                      // ================= QR SCANNER =================
-
-                      Container(
-                        height: 340,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          border: Border.all(
-                            color: Colors.black54,
-                          ),
-                        ),
-                        child: MobileScanner(
-                          controller: controller,
-                          onDetect: (capture) {
-                            final List<Barcode> barcodes = capture.barcodes;
-
-                            for (final barcode in barcodes) {
-                              setState(() {
-                                foodName = barcode.rawValue ?? "";
-                              });
-                            }
-                          },
-                        ),
-                      ),
-
-                      const SizedBox(height: 30),
-
-                      // ================= NAME =================
-
-                      const Text(
-                        "Name:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      Text(
-                        foodName,
-                        style: const TextStyle(
-                          fontSize: 20,
-                        ),
+                      MealScanScreen(
+                        mealType: 'LC',
+                        mealLabel: 'Lunch',
+                        eventId: widget.categoryId ?? 0,
+                        accentColor: const Color(0xFF7b1fa2),
                       ),
                     ],
                   ),

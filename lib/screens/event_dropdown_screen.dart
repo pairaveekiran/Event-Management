@@ -89,13 +89,13 @@ class _EventDropdownScreenState
     Navigator.push(
       context,
       MaterialPageRoute(
+        settings: RouteSettings(arguments: category.id),
         builder: (context) => ServingMenuUI(
-          // FIXED
-          categoryId: category.id, // FIXED
-          categoryTitle: category.title, // FIXED
-          categoryDate: category.date, // FIXED
-          categoryVenue: category.venue.trim(), // FIXED
-        ), // FIXED
+          categoryId: category.id,
+          categoryTitle: category.title,
+          categoryDate: category.date,
+          categoryVenue: category.venue.trim(),
+        ),
       ),
     );
   }

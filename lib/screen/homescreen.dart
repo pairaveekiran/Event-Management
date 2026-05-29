@@ -3,10 +3,12 @@ import 'package:event_management/screen/dinner.dart';
 import 'package:event_management/screen/drinks.dart';
 import 'package:event_management/screen/lunch.dart';
 import 'package:event_management/screen/tea.dart';
+import 'package:event_management/models/meals_config.dart';
+import 'package:event_management/services/event_service.dart';
 import 'package:flutter/material.dart';
 
 class ServingMenuUI
-    extends StatelessWidget {
+    extends StatefulWidget {
   const ServingMenuUI(
       {super.key,
       this.categoryId,
@@ -24,16 +26,275 @@ class ServingMenuUI
       categoryVenue;
 
   @override
+  State<ServingMenuUI> createState() =>
+      _ServingMenuUIState();
+}
+
+class _ServingMenuUIState
+    extends State<ServingMenuUI> {
+  MealsConfig?
+      _mealsConfig;
+  bool
+      _isLoading =
+      true;
+  String?
+      _errorMessage;
+  late int
+      _eventId;
+  bool
+      _initialized =
+      false;
+
+  @override
+  void
+      didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_initialized) {
+      return;
+    }
+
+    final Object?
+        arguments =
+        ModalRoute.of(context)?.settings.arguments;
+    if (arguments
+        is int) {
+      _eventId = arguments;
+    } else if (widget.categoryId !=
+        null) {
+      _eventId = widget.categoryId!;
+    } else {
+      _errorMessage = 'Missing event id';
+      _isLoading = false;
+      _initialized = true;
+      return;
+    }
+
+    _initialized =
+        true;
+    _loadMealsConfig();
+  }
+
+  Future<void>
+      _loadMealsConfig() async {
+    try {
+      if (mounted) {
+        setState(() {
+          _isLoading = true;
+          _errorMessage = null;
+        });
+      }
+
+      final MealsConfig mealsConfig = await EventService().fetchMealsConfig(_eventId);
+
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _mealsConfig = mealsConfig;
+      });
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _errorMessage = error.toString().replaceFirst('Exception: ', '');
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  List<Map<String, dynamic>>
+      _getActiveMeals() {
+    if (_mealsConfig ==
+        null) {
+      return <Map<String, dynamic>>[];
+    }
+
+    final List<Map<String, dynamic>>
+        meals =
+        <Map<String, dynamic>>[];
+
+    if (_mealsConfig!.showBreakfast) {
+      meals.add(<String, dynamic>{
+        'label': 'Breakfast',
+        'icon': Icons.breakfast_dining,
+        'color': const Color(0xFF2d5a27),
+        'bgColor': const Color(0xFFe8f5e9),
+      });
+    }
+
+    if (_mealsConfig!.showLunch) {
+      meals.add(<String, dynamic>{
+        'label': 'Lunch',
+        'icon': Icons.lunch_dining,
+        'color': const Color(0xFF7b1fa2),
+        'bgColor': const Color(0xFFf3e5f5),
+      });
+    }
+
+    if (_mealsConfig!.showDinner) {
+      meals.add(<String, dynamic>{
+        'label': 'Dinner',
+        'icon': Icons.restaurant,
+        'color': const Color(0xFF0288d1),
+        'bgColor': const Color(0xFFe1f5fe),
+      });
+    }
+
+    if (_mealsConfig!.showTea) {
+      meals.add(<String, dynamic>{
+        'label': 'Tea',
+        'icon': Icons.coffee,
+        'color': const Color(0xFF5d4037),
+        'bgColor': const Color(0xFFefebe9),
+      });
+    }
+
+    if (_mealsConfig!.showDrinks) {
+      meals.add(<String, dynamic>{
+        'label': 'Drinks',
+        'icon': Icons.local_bar,
+        'color': const Color(0xFFf57c00),
+        'bgColor': const Color(0xFFFFF8E1),
+      });
+    }
+
+    return meals;
+  }
+
+  Widget
+      _buildMealButton({
+    required String
+        label,
+    required IconData
+        icon,
+    required Color
+        color,
+    required Color
+        bgColor,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        if (label == 'Breakfast') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Breakfast(
+                categoryId: widget.categoryId,
+                categoryTitle: widget.categoryTitle,
+                categoryDate: widget.categoryDate,
+                categoryVenue: widget.categoryVenue,
+              ),
+            ),
+          );
+          return;
+        }
+
+        if (label == 'Lunch') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Lunch(
+                categoryId: widget.categoryId,
+                categoryTitle: widget.categoryTitle,
+                categoryDate: widget.categoryDate,
+                categoryVenue: widget.categoryVenue,
+              ),
+            ),
+          );
+          return;
+        }
+
+        if (label == 'Dinner') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Dinner(
+                categoryId: widget.categoryId,
+                categoryTitle: widget.categoryTitle,
+                categoryDate: widget.categoryDate,
+                categoryVenue: widget.categoryVenue,
+              ),
+            ),
+          );
+          return;
+        }
+
+        if (label == 'Tea') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Tea(
+                categoryId: widget.categoryId,
+                categoryTitle: widget.categoryTitle,
+                categoryDate: widget.categoryDate,
+                categoryVenue: widget.categoryVenue,
+              ),
+            ),
+          );
+          return;
+        }
+
+        if (label == 'Drinks') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Drinks(
+                categoryId: widget.categoryId,
+                categoryTitle: widget.categoryTitle,
+                categoryDate: widget.categoryDate,
+                categoryVenue: widget.categoryVenue,
+              ),
+            ),
+          );
+        }
+      },
+      child: Container(
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: color.withValues(alpha: 0.4), width: 1.5),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: color, size: 36),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: TextStyle(
+                color: color,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
   Widget
       build(BuildContext context) {
     final String
         headerTitle =
-        categoryTitle ?? 'Alliance Leadership Development Institute(ALDI)-2026';
-    final String headerDate = (categoryDate?.trim().isNotEmpty ?? false)
-        ? categoryDate!.trim()
+        widget.categoryTitle ?? 'Alliance Leadership Development Institute(ALDI)-2026';
+    final String headerDate = (widget.categoryDate?.trim().isNotEmpty ?? false)
+        ? widget.categoryDate!.trim()
         : 'Date not available';
-    final String headerVenue = (categoryVenue?.trim().isNotEmpty ?? false)
-        ? categoryVenue!.trim()
+    final String headerVenue = (widget.categoryVenue?.trim().isNotEmpty ?? false)
+        ? widget.categoryVenue!.trim()
         : 'Venue not available';
     final String
         headerDateVenue =
@@ -51,8 +312,8 @@ class ServingMenuUI
                 width: double.infinity,
                 color: const Color(0xFF1F2A74),
                 padding: const EdgeInsets.only(
-                  top: 25,
-                  bottom: 18,
+                  top: 18,
+                  bottom: 12,
                   left: 12,
                   right: 12,
                 ),
@@ -115,7 +376,7 @@ class ServingMenuUI
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           color: Colors.yellow,
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -126,7 +387,7 @@ class ServingMenuUI
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 13,
                       ),
                     ),
                   ],
@@ -149,8 +410,8 @@ class ServingMenuUI
                   children: [
                     Image.asset(
                       "assets/images/club_logo.png",
-                      height: 70,
-                      width: 70,
+                      height: 58,
+                      width: 58,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
                         return const Icon(
@@ -162,8 +423,8 @@ class ServingMenuUI
                     ),
                     Image.asset(
                       "assets/images/flag.png",
-                      height: 70,
-                      width: 70,
+                      height: 58,
+                      width: 58,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
                         return const Icon(
@@ -175,8 +436,8 @@ class ServingMenuUI
                     ),
                     Image.asset(
                       "assets/images/international_logo.png",
-                      height: 70,
-                      width: 70,
+                      height: 58,
+                      width: 58,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
                         return const Icon(
@@ -195,11 +456,11 @@ class ServingMenuUI
               // ================= MAIN BOX =================
 
               Container(
-                margin: const EdgeInsets.all(18),
-                padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(14),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: const Color(0xFFF5F5DD),
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(22),
                   border: Border.all(
                     color: Colors.yellow,
                     width: 1.2,
@@ -211,203 +472,62 @@ class ServingMenuUI
                     const Text(
                       "Serving Menu",
                       style: TextStyle(
-                        fontSize: 38,
+                        fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF273C8F),
                       ),
                     ),
 
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
 
-                    Container(
-                      height: 4,
-                      width: 270,
-                      color: Colors.red,
-                    ),
+                    Container(height: 3, width: 220, color: Colors.red),
 
-                    const SizedBox(height: 35),
+                    const SizedBox(height: 24),
 
-                    // ================= GRID =================
-
-                    Wrap(
-                      spacing: 20,
-                      runSpacing: 25,
-                      alignment: WrapAlignment.center,
-                      children: [
-                        MenuButton(
-                          title: "Breakfast",
-                          icon: Icons.breakfast_dining,
-                          iconColor: const Color.fromARGB(255, 3, 112, 6),
-                          color: const Color(0xFFE9F5D9),
-                          borderColor: const Color.fromARGB(255, 3, 112, 6),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Breakfast(
-                                  categoryTitle: headerTitle,
-                                  categoryDate: headerDate,
-                                  categoryVenue: headerVenue,
-                                ),
-                              ),
-                            );
-                          },
+                    if (_isLoading)
+                      const SizedBox(
+                        height: 120,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFF1a237e),
+                          ),
                         ),
-                        MenuButton(
-                          title: "Lunch",
-                          icon: Icons.lunch_dining,
-                          iconColor: Colors.purple,
-                          color: const Color(0xFFF3E5F5),
-                          borderColor: Colors.purple,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Lunch(
-                                  categoryTitle: headerTitle,
-                                  categoryDate: headerDate,
-                                  categoryVenue: headerVenue,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        MenuButton(
-                          title: "Dinner",
-                          icon: Icons.restaurant,
-                          iconColor: Colors.blue,
-                          color: const Color(0xFFDDEEEF),
-                          borderColor: Colors.blue,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Dinner(
-                                  categoryTitle: headerTitle,
-                                  categoryDate: headerDate,
-                                  categoryVenue: headerVenue,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        MenuButton(
-                          title: "Tea",
-                          icon: Icons.emoji_food_beverage,
-                          iconColor: Colors.brown,
-                          color: const Color(0xFFF3E8C9),
-                          borderColor: Colors.brown,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Tea(
-                                  categoryTitle: headerTitle,
-                                  categoryDate: headerDate,
-                                  categoryVenue: headerVenue,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        MenuButton(
-                          title: "Drinks",
-                          icon: Icons.local_bar,
-                          iconColor: Colors.orange,
-                          color: const Color(0xFFF9EDBE),
-                          borderColor: Colors.orange,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Drinks(
-                                  categoryTitle: headerTitle,
-                                  categoryDate: headerDate,
-                                  categoryVenue: headerVenue,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                      )
+                    else if (_errorMessage != null)
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            _errorMessage!,
+                            style: const TextStyle(color: Colors.red),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton(
+                            onPressed: _loadMealsConfig,
+                            child: const Text('Retry'),
+                          ),
+                        ],
+                      )
+                    else
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
+                        alignment: WrapAlignment.center,
+                        children: _getActiveMeals().map((meal) {
+                          return _buildMealButton(
+                            label: meal['label'] as String,
+                            icon: meal['icon'] as IconData,
+                            color: meal['color'] as Color,
+                            bgColor: meal['bgColor'] as Color,
+                          );
+                        }).toList(),
+                      ),
                   ],
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class MenuButton
-    extends StatelessWidget {
-  final String
-      title;
-  final IconData
-      icon;
-  final Color
-      color;
-  final Color
-      borderColor;
-  final Color
-      iconColor;
-  final VoidCallback
-      onTap;
-
-  const MenuButton({
-    super.key,
-    required this.title,
-    required this.icon,
-    required this.color,
-    required this.borderColor,
-    required this.iconColor,
-    required this.onTap,
-  });
-
-  @override
-  Widget
-      build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 125,
-        height: 125,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: borderColor,
-            width: 1.2,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(51),
-              blurRadius: 5,
-              offset: const Offset(2, 4),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 45,
-              color: iconColor,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: iconColor,
-              ),
-            ),
-          ],
         ),
       ),
     );

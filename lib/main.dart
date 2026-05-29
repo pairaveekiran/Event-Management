@@ -89,18 +89,7 @@ class _LandingPageState extends State<LandingPage> {
                       ),
                     ),
 
-                    SizedBox(height: 8),
-
-                    Text(
-                      "2026-06-06, Kahukot Resort, Kahudanda",
-                      textAlign: TextAlign.center,
-
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                  
                   ],
                 ),
               ),
@@ -297,7 +286,7 @@ class _LandingPageState extends State<LandingPage> {
                         ),
 
                         child: const Text(
-                          "Submit",
+                          "Enter",
 
                           style: TextStyle(
                             fontSize: 22,

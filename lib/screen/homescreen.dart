@@ -9,20 +9,20 @@ class ServingMenuUI
     extends StatelessWidget {
   const ServingMenuUI(
       {super.key,
-    this.categoryId,
-    this.categoryTitle});
+      this.categoryId,
+      this.categoryTitle});
 
   final int?
       categoryId;
   final String?
-    categoryTitle;
+      categoryTitle;
 
   @override
   Widget
       build(BuildContext context) {
-    final String headerTitle =
-        categoryTitle ??
-        'Alliance Leadership Development Institute(ALDI)-2026';
+    final String
+        headerTitle =
+        categoryTitle ?? 'Alliance Leadership Development Institute(ALDI)-2026';
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),

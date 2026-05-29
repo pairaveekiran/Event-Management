@@ -225,7 +225,9 @@ class ServingMenuUI
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Breakfast(),
+                                builder: (context) => Breakfast(
+                                  categoryTitle: headerTitle,
+                                ),
                               ),
                             );
                           },
@@ -240,7 +242,9 @@ class ServingMenuUI
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Lunch(),
+                                builder: (context) => Lunch(
+                                  categoryTitle: headerTitle,
+                                ),
                               ),
                             );
                           },
@@ -255,7 +259,9 @@ class ServingMenuUI
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Dinner(),
+                                builder: (context) => Dinner(
+                                  categoryTitle: headerTitle,
+                                ),
                               ),
                             );
                           },
@@ -270,7 +276,9 @@ class ServingMenuUI
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Tea(),
+                                builder: (context) => Tea(
+                                  categoryTitle: headerTitle,
+                                ),
                               ),
                             );
                           },
@@ -285,7 +293,9 @@ class ServingMenuUI
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Drinks(),
+                                builder: (context) => Drinks(
+                                  categoryTitle: headerTitle,
+                                ),
                               ),
                             );
                           },

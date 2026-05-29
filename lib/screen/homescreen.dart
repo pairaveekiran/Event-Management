@@ -18,7 +18,7 @@ class ServingMenuUI
       categoryId;
   final String?
       categoryTitle;
-    final String?
+  final String?
       categoryDate;
   final String?
       categoryVenue;
@@ -29,12 +29,15 @@ class ServingMenuUI
     final String
         headerTitle =
         categoryTitle ?? 'Alliance Leadership Development Institute(ALDI)-2026';
-    final String headerDate =
-      (categoryDate?.trim().isNotEmpty ?? false) ? categoryDate!.trim() : 'Date not available';
+    final String headerDate = (categoryDate?.trim().isNotEmpty ?? false)
+        ? categoryDate!.trim()
+        : 'Date not available';
     final String headerVenue = (categoryVenue?.trim().isNotEmpty ?? false)
         ? categoryVenue!.trim()
         : 'Venue not available';
-    final String headerDateVenue = '$headerDate, $headerVenue';
+    final String
+        headerDateVenue =
+        '$headerDate, $headerVenue';
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),

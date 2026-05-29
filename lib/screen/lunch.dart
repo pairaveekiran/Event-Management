@@ -12,7 +12,7 @@ class Lunch
 
   final String?
       categoryTitle;
-    final String?
+  final String?
       categoryDate;
   final String?
       categoryVenue;
@@ -67,12 +67,15 @@ class _LunchState
     final String
         headerTitle =
         widget.categoryTitle ?? "Alliance Leadership Development Institute(ALDI)-2026";
-    final String headerDate =
-      (widget.categoryDate?.trim().isNotEmpty ?? false) ? widget.categoryDate!.trim() : "Date not available";
+    final String headerDate = (widget.categoryDate?.trim().isNotEmpty ?? false)
+        ? widget.categoryDate!.trim()
+        : "Date not available";
     final String headerVenue = (widget.categoryVenue?.trim().isNotEmpty ?? false)
         ? widget.categoryVenue!.trim()
         : "Venue not available";
-    final String headerDateVenue = '$headerDate, $headerVenue';
+    final String
+        headerDateVenue =
+        '$headerDate, $headerVenue';
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
         // Swipe right to go back

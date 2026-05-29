@@ -5,78 +5,104 @@ import 'package:event_management/screen/lunch.dart';
 import 'package:event_management/screen/tea.dart';
 import 'package:flutter/material.dart';
 
+class ServingMenuUI
+    extends StatelessWidget {
+  const ServingMenuUI(
+      {super.key,
+    this.categoryId,
+    this.categoryTitle});
 
-
-class ServingMenuUI extends StatelessWidget {
-  const ServingMenuUI({super.key});
+  final int?
+      categoryId;
+  final String?
+    categoryTitle;
 
   @override
-  Widget build(BuildContext context) {
+  Widget
+      build(BuildContext context) {
+    final String headerTitle =
+        categoryTitle ??
+        'Alliance Leadership Development Institute(ALDI)-2026';
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
-
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-
               // ================= HEADER =================
 
               Container(
                 width: double.infinity,
                 color: const Color(0xFF1F2A74),
-
                 padding: const EdgeInsets.only(
                   top: 25,
                   bottom: 18,
                   left: 12,
                   right: 12,
                 ),
-
-                child: const Column(
+                child: Column(
                   children: [
-
-                    Text(
-                      "Association of Alliance Clubs International",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          tooltip: 'Back',
+                        ),
+                        const SizedBox(width: 8),
+                        const Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Association of Alliance Clubs International",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(height: 3),
+                              Text(
+                                "District 1055, Nepal",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 28),
+                      ],
                     ),
-
-                    SizedBox(height: 3),
-
-                    Text(
-                      "District 1055, Nepal",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-
-                    SizedBox(height: 5),
-
+                    const SizedBox(height: 5),
                     FittedBox(
                       fit: BoxFit.scaleDown,
-
                       child: Text(
-                        "Alliance Leadership Development Institute(ALDI)-2026",
+                        headerTitle,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.yellow,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-
-                    SizedBox(height: 5),
-
-                    Text(
+                    const SizedBox(height: 5),
+                    const Text(
                       "2026-06-06, Kahukot Resort, Kahudanda",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -99,21 +125,15 @@ class ServingMenuUI extends StatelessWidget {
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-
                 child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceAround,
-
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-
                     Image.asset(
                       "assets/images/club_logo.png",
                       height: 70,
                       width: 70,
                       fit: BoxFit.contain,
-
-                      errorBuilder:
-                          (context, error, stackTrace) {
+                      errorBuilder: (context, error, stackTrace) {
                         return const Icon(
                           Icons.error,
                           color: Colors.red,
@@ -121,15 +141,12 @@ class ServingMenuUI extends StatelessWidget {
                         );
                       },
                     ),
-
                     Image.asset(
                       "assets/images/flag.png",
                       height: 70,
                       width: 70,
                       fit: BoxFit.contain,
-
-                      errorBuilder:
-                          (context, error, stackTrace) {
+                      errorBuilder: (context, error, stackTrace) {
                         return const Icon(
                           Icons.error,
                           color: Colors.red,
@@ -137,15 +154,12 @@ class ServingMenuUI extends StatelessWidget {
                         );
                       },
                     ),
-
                     Image.asset(
                       "assets/images/international_logo.png",
                       height: 70,
                       width: 70,
                       fit: BoxFit.contain,
-
-                      errorBuilder:
-                          (context, error, stackTrace) {
+                      errorBuilder: (context, error, stackTrace) {
                         return const Icon(
                           Icons.error,
                           color: Colors.red,
@@ -164,20 +178,16 @@ class ServingMenuUI extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.all(18),
                 padding: const EdgeInsets.all(20),
-
                 decoration: BoxDecoration(
                   color: const Color(0xFFF5F5DD),
                   borderRadius: BorderRadius.circular(25),
-
                   border: Border.all(
                     color: Colors.yellow,
                     width: 1.2,
                   ),
                 ),
-
                 child: Column(
                   children: [
-
                     // TITLE
                     const Text(
                       "Serving Menu",
@@ -204,94 +214,78 @@ class ServingMenuUI extends StatelessWidget {
                       spacing: 20,
                       runSpacing: 25,
                       alignment: WrapAlignment.center,
-
                       children: [
-
                         MenuButton(
                           title: "Breakfast",
                           icon: Icons.breakfast_dining,
                           iconColor: const Color.fromARGB(255, 3, 112, 6),
                           color: const Color(0xFFE9F5D9),
                           borderColor: const Color.fromARGB(255, 3, 112, 6),
-
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const Breakfast(),
+                                builder: (context) => const Breakfast(),
                               ),
                             );
                           },
                         ),
-
                         MenuButton(
                           title: "Lunch",
                           icon: Icons.lunch_dining,
                           iconColor: Colors.purple,
                           color: const Color(0xFFF3E5F5),
                           borderColor: Colors.purple,
-
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const Lunch(),
+                                builder: (context) => const Lunch(),
                               ),
                             );
                           },
                         ),
-
                         MenuButton(
                           title: "Dinner",
                           icon: Icons.restaurant,
                           iconColor: Colors.blue,
                           color: const Color(0xFFDDEEEF),
                           borderColor: Colors.blue,
-
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const Dinner(),
+                                builder: (context) => const Dinner(),
                               ),
                             );
                           },
                         ),
-
                         MenuButton(
                           title: "Tea",
                           icon: Icons.emoji_food_beverage,
                           iconColor: Colors.brown,
                           color: const Color(0xFFF3E8C9),
                           borderColor: Colors.brown,
-
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const Tea(),
+                                builder: (context) => const Tea(),
                               ),
                             );
                           },
                         ),
-
                         MenuButton(
                           title: "Drinks",
                           icon: Icons.local_bar,
                           iconColor: Colors.orange,
                           color: const Color(0xFFF9EDBE),
                           borderColor: Colors.orange,
-
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const Drinks(),
+                                builder: (context) => const Drinks(),
                               ),
                             );
                           },
@@ -309,14 +303,20 @@ class ServingMenuUI extends StatelessWidget {
   }
 }
 
-class MenuButton extends StatelessWidget {
-
-  final String title;
-  final IconData icon;
-  final Color color;
-  final Color borderColor;
-  final Color iconColor;
-  final VoidCallback onTap;
+class MenuButton
+    extends StatelessWidget {
+  final String
+      title;
+  final IconData
+      icon;
+  final Color
+      color;
+  final Color
+      borderColor;
+  final Color
+      iconColor;
+  final VoidCallback
+      onTap;
 
   const MenuButton({
     super.key,
@@ -329,47 +329,37 @@ class MenuButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-
+  Widget
+      build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-
       child: Container(
         width: 125,
         height: 125,
-
         decoration: BoxDecoration(
           color: color,
-
           borderRadius: BorderRadius.circular(20),
-
           border: Border.all(
             color: borderColor,
             width: 1.2,
           ),
-
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withAlpha(51),
               blurRadius: 5,
               offset: const Offset(2, 4),
             ),
           ],
         ),
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: [
-
             Icon(
               icon,
               size: 45,
               color: iconColor,
             ),
-
             const SizedBox(height: 10),
-
             Text(
               title,
               style: TextStyle(

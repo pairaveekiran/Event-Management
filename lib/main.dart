@@ -31,6 +31,7 @@ class _LandingPageState extends State<LandingPage> {
   String? selectedEvent;
 
   final List<String> events = [
+    "Alliance Leadership Development Institute(ALDI)-2026",
     "Breakfast",
     "Lunch",
     "Dinner",
@@ -216,7 +217,7 @@ class _LandingPageState extends State<LandingPage> {
                             "Select Event",
 
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 16,
                             ),
                           ),
 
@@ -235,7 +236,7 @@ class _LandingPageState extends State<LandingPage> {
                                 event,
 
                                 style: const TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                 ),
                               ),
                             );
@@ -297,7 +298,7 @@ class _LandingPageState extends State<LandingPage> {
                         ),
 
                         child: const Text(
-                          "Submit",
+                          "Proceed",
 
                           style: TextStyle(
                             fontSize: 22,

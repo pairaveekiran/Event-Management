@@ -214,6 +214,15 @@ class _DrinksState extends State<Drinks> {
                       ),
 
                       const SizedBox(height: 8),
+                      const Text(
+                        "Number of drinks:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
 
                       Text(
                         drinkName,

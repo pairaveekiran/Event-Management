@@ -12,11 +12,15 @@ class MealScanScreen
       eventId;
   final Color
       accentColor;
+  final bool
+      showDrinksCount;
 
   const MealScanScreen({
     required this.mealType,
     required this.eventId,
     required this.accentColor,
+    this.showDrinksCount =
+        false,
     super.key,
   });
 
@@ -172,6 +176,8 @@ class _MealScanScreenState
       await _showResultDialog(
         isSuccess: response.status,
         message: response.message,
+        name: response.userName,
+        drinksCount: response.drinksCount,
         membershipNo: membershipNo,
       );
     } catch (e) {
@@ -181,6 +187,8 @@ class _MealScanScreenState
       await _showResultDialog(
         isSuccess: false,
         message: 'Error: ${e.toString()}',
+        name: null,
+        drinksCount: null,
         membershipNo: membershipNo,
       );
     } finally {
@@ -196,6 +204,10 @@ class _MealScanScreenState
         isSuccess,
     required String
         message,
+    required String?
+        name,
+    required String?
+        drinksCount,
     required String
         membershipNo,
   }) async {
@@ -253,6 +265,89 @@ class _MealScanScreenState
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     children: [
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF5F5F5),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: const Color(0xFFE0E0E0)),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.person_outline, color: Color(0xFF1a237e), size: 22),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Name',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    name?.trim().isNotEmpty == true ? name!.trim() : 'N/A',
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Color(0xFF1a237e),
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (widget.showDrinksCount) ...[
+                        const SizedBox(height: 16),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF5F5F5),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: const Color(0xFFE0E0E0)),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.local_drink_outlined, color: Color(0xFF1a237e), size: 22),
+                              const SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Drinks Count',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    drinksCount?.trim().isNotEmpty == true ? drinksCount!.trim() : '0',
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Color(0xFF1a237e),
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                      const SizedBox(height: 16),
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

@@ -232,6 +232,7 @@ class _DrinksState
                         mealType: 'drinks',
                         eventId: widget.categoryId ?? 0,
                         accentColor: const Color(0xFFf57c00),
+                        showDrinksCount: true,
                       ),
                     ],
                   ),

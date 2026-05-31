@@ -144,6 +144,8 @@ class EventService {
       return MealOrderResponse(
         status: response.statusCode == 200,
         message: parsedResponse.message,
+        userName: parsedResponse.userName,
+        drinksCount: parsedResponse.drinksCount,
         membershipNo: parsedResponse.membershipNo,
         mealType: parsedResponse.mealType,
       );

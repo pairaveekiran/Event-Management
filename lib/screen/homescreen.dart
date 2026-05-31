@@ -264,7 +264,7 @@ class _ServingMenuUIState
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withValue(alpha: 0.4), width: 1.5),
+          border: Border.all(color: color.withValues(alpha: 0.4), width: 1.5),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -423,7 +423,6 @@ class _ServingMenuUIState
                         );
                       },
                     ),
-                   
                     Image.asset(
                       "assets/images/international_logo.png",
                       height: 58,
@@ -437,7 +436,7 @@ class _ServingMenuUIState
                         );
                       },
                     ),
-                     Image.asset(
+                    Image.asset(
                       "assets/images/flag.png",
                       height: 58,
                       width: 58,

@@ -1,8 +1,7 @@
 import 'package:event_management/screen/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:event_management/widgets/app_credit_footer.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-
+import 'package:event_management/screens/meal_scan_screen.dart';
 
 class Drinks
     extends StatefulWidget {
@@ -29,10 +28,6 @@ class Drinks
 
 class _DrinksState
     extends State<Drinks> {
-  String
-      drinkName =
-      "";
-
   void
       goToMainPage() {
     Navigator.pushAndRemoveUntil(
@@ -180,13 +175,12 @@ class _DrinksState
                         height: 70,
                         width: 70,
                       ),
-                    
                       Image.asset(
                         "assets/images/international_logo.png",
                         height: 70,
                         width: 70,
                       ),
-                        Image.asset(
+                      Image.asset(
                         "assets/images/flag.png",
                         height: 70,
                         width: 70,
@@ -234,60 +228,10 @@ class _DrinksState
 
                       const SizedBox(height: 30),
 
-
-                      // ================= QR SCANNER =================
-                      Container(
-                        height: 340,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          border: Border.all(color: Colors.black54),
-                        ),
-                        child: MobileScanner(
-                          controller: controller,
-                          onDetect: (capture) {
-                            final barcodes = capture.barcodes;
-
-                            for (final barcode in barcodes) {
-                              setState(() {
-                                drinkName = barcode.rawValue ?? "";
-                              });
-                            }
-                          },
-                        ),
-                      ),
-
-                      const SizedBox(height: 30),
-
-                      // ================= NAME =================
-                      const Text(
-                        "Name:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-                      const Text(
-                        "Number of drinks:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      Text(
-                        drinkName,
-                        style: const TextStyle(fontSize: 20),
-
                       MealScanScreen(
                         mealType: 'drinks',
                         eventId: widget.categoryId ?? 0,
-                        accentColor: const Color(0xFFf57c00),)
-
+                        accentColor: const Color(0xFFf57c00),
                       ),
                     ],
                   ),

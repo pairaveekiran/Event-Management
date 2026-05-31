@@ -3,38 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:event_management/widgets/app_credit_footer.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
+class Drinks extends StatefulWidget {
+  const Drinks({
+    super.key,
+    this.categoryId,
+    this.categoryTitle,
+    this.categoryDate,
+    this.categoryVenue,
+  });
 
-class Drinks
-    extends StatefulWidget {
-  const Drinks(
-      {super.key,
-      this.categoryId,
-      this.categoryTitle,
-      this.categoryDate,
-      this.categoryVenue});
-
-  final int?
-      categoryId;
-  final String?
-      categoryTitle;
-  final String?
-      categoryDate;
-  final String?
-      categoryVenue;
+  final int? categoryId;
+  final String? categoryTitle;
+  final String? categoryDate;
+  final String? categoryVenue;
 
   @override
-  State<Drinks> createState() =>
-      _DrinksState();
+  State<Drinks> createState() => _DrinksState();
 }
 
-class _DrinksState
-    extends State<Drinks> {
-  String
-      drinkName =
-      "";
+class _DrinksState extends State<Drinks> {
+  String drinkName = "";
 
-  void
-      goToMainPage() {
+  final MobileScannerController controller = MobileScannerController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  void goToMainPage() {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
@@ -50,20 +48,22 @@ class _DrinksState
   }
 
   @override
-  Widget
-      build(BuildContext context) {
-    final String
-        headerTitle =
+  Widget build(BuildContext context) {
+    final String headerTitle =
         widget.categoryTitle ?? "Alliance Leadership Development Institute(ALDI)-2026";
-    final String headerDate = (widget.categoryDate?.trim().isNotEmpty ?? false)
-        ? widget.categoryDate!.trim()
-        : "Date not available";
-    final String headerVenue = (widget.categoryVenue?.trim().isNotEmpty ?? false)
-        ? widget.categoryVenue!.trim()
-        : "Venue not available";
-    final String
-        headerDateVenue =
-        '$headerDate, $headerVenue';
+
+    final String headerDate =
+        (widget.categoryDate?.trim().isNotEmpty ?? false)
+            ? widget.categoryDate!.trim()
+            : "Date not available";
+
+    final String headerVenue =
+        (widget.categoryVenue?.trim().isNotEmpty ?? false)
+            ? widget.categoryVenue!.trim()
+            : "Venue not available";
+
+    final String headerDateVenue = '$headerDate, $headerVenue';
+
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
         if (details.delta.dx > 15) {
@@ -161,6 +161,7 @@ class _DrinksState
                 Container(height: 4, color: Colors.yellow),
 
                 const SizedBox(height: 20),
+
                 Text(
                   headerDateVenue,
                   textAlign: TextAlign.center,
@@ -180,13 +181,12 @@ class _DrinksState
                         height: 70,
                         width: 70,
                       ),
-                    
                       Image.asset(
                         "assets/images/international_logo.png",
                         height: 70,
                         width: 70,
                       ),
-                        Image.asset(
+                      Image.asset(
                         "assets/images/flag.png",
                         height: 70,
                         width: 70,
@@ -212,7 +212,6 @@ class _DrinksState
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // TITLE
                       const Center(
                         child: Text(
                           "Drinks",
@@ -234,13 +233,12 @@ class _DrinksState
 
                       const SizedBox(height: 30),
 
-
                       // ================= QR SCANNER =================
                       Container(
                         height: 340,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: Colors.grey,
                           border: Border.all(color: Colors.black54),
                         ),
                         child: MobileScanner(
@@ -259,7 +257,6 @@ class _DrinksState
 
                       const SizedBox(height: 30),
 
-                      // ================= NAME =================
                       const Text(
                         "Name:",
                         style: TextStyle(
@@ -269,6 +266,7 @@ class _DrinksState
                       ),
 
                       const SizedBox(height: 8),
+
                       const Text(
                         "Number of drinks:",
                         style: TextStyle(
@@ -281,14 +279,13 @@ class _DrinksState
 
                       Text(
                         drinkName,
-                        style: const TextStyle(fontSize: 20),
-
-                      MealScanScreen(
-                        mealType: 'drinks',
-                        eventId: widget.categoryId ?? 0,
-                        accentColor: const Color(0xFFf57c00),)
-
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
                       ),
+
+                      // If you need MealScanScreen,
+                      // place it here and import its file.
                     ],
                   ),
                 ),

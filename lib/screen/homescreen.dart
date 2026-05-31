@@ -264,7 +264,8 @@ class _ServingMenuUIState
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withValue(alpha: 0.4), width: 1.5),
+          border: Border.all(color: color.withOpacity( 0.4),
+  width: 1.5,),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

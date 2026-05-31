@@ -62,7 +62,9 @@ class _MealScanScreenState
 
   Future<void>
       _prepareCamera() async {
-    final PermissionStatus status = await Permission.camera.status;
+    final PermissionStatus
+        status =
+        await Permission.camera.status;
 
     if (!mounted) {
       return;
@@ -78,7 +80,9 @@ class _MealScanScreenState
       return;
     }
 
-    final PermissionStatus requestStatus = await Permission.camera.request();
+    final PermissionStatus
+        requestStatus =
+        await Permission.camera.request();
 
     if (!mounted) {
       return;
@@ -97,9 +101,7 @@ class _MealScanScreenState
     setState(() {
       _hasCameraPermission = false;
       _isCheckingPermission = false;
-      _permissionMessage = requestStatus.isPermanentlyDenied
-          ? 'Camera permission is permanently denied. Open app settings to allow QR scanning.'
-          : 'Camera permission is required to scan QR codes.';
+      _permissionMessage = requestStatus.isPermanentlyDenied ? 'Camera permission is permanently denied. Open app settings to allow QR scanning.' : 'Camera permission is required to scan QR codes.';
     });
   }
 
@@ -116,7 +118,8 @@ class _MealScanScreenState
   void _onQRDetected(
       BarcodeCapture capture) async {
     // STEP 1: Guard — ignore if already scanned or processing
-    if (_hasScanned || _isProcessing) {
+    if (_hasScanned ||
+        _isProcessing) {
       return; // KEY FIX: ignore subsequent detections
     }
 
@@ -127,7 +130,8 @@ class _MealScanScreenState
     final String?
         rawValue =
         capture.barcodes.first.rawValue;
-    if (rawValue == null || rawValue.isEmpty) {
+    if (rawValue == null ||
+        rawValue.isEmpty) {
       return;
     }
 
@@ -439,43 +443,43 @@ class _MealScanScreenState
                       ),
                     )
                   : _isProcessing
-              ? Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CircularProgressIndicator(color: widget.accentColor),
-                      const SizedBox(height: 16),
-                      const Text('Processing...', style: TextStyle(fontSize: 16)),
-                    ],
-                  ),
-                )
-              : ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: MobileScanner(
-                    controller: _cameraController,
-                    onDetect: _onQRDetected, // KEY FIX: stop on first detection
-                    errorBuilder: (context, error, child) {
-                      return Container(
-                        width: double.infinity,
-                        height: 340,
-                        color: Colors.black,
-                        alignment: Alignment.center,
-                        child: const Padding(
-                          padding: EdgeInsets.all(24),
-                          child: Text(
-                            'Camera unavailable. Check camera permission and device support.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
+                      ? Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CircularProgressIndicator(color: widget.accentColor),
+                              const SizedBox(height: 16),
+                              const Text('Processing...', style: TextStyle(fontSize: 16)),
+                            ],
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: MobileScanner(
+                            controller: _cameraController,
+                            onDetect: _onQRDetected, // KEY FIX: stop on first detection
+                            errorBuilder: (context, error) {
+                              return Container(
+                                width: double.infinity,
+                                height: 340,
+                                color: Colors.black,
+                                alignment: Alignment.center,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(24),
+                                  child: Text(
+                                    'Camera unavailable. Check camera permission and device support.',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
-                      );
-                    },
-                  ),
-                ),
         ),
       ],
     );

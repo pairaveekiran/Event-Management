@@ -1,24 +1,34 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_const
 
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class AppCreditFooter extends StatelessWidget {
-  const AppCreditFooter({super.key});
+class AppCreditFooter
+    extends StatelessWidget {
+  const AppCreditFooter(
+      {super.key});
 
-  Future<void> _openWebsoftWebsite() async {
-    final Uri uri = Uri.parse('https://sanjoggodar.com.np/');
-    final bool launched = await launchUrl(
-      uri,
-      mode: LaunchMode.platformDefault,
+  void _showCreditDialog(
+      BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Powered by Websoft Technologies Nepal'),
+          content: const Text('Website: https://sanjoggodar.com.np/'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
     );
-    if (!launched) {
-      throw Exception('Could not open https://sanjoggodar.com.np/');
-    }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget
+      build(BuildContext context) {
     return SafeArea(
       top: false,
       child: Material(
@@ -31,7 +41,7 @@ class AppCreditFooter extends StatelessWidget {
             ),
           ),
           child: TextButton(
-            onPressed: _openWebsoftWebsite,
+            onPressed: () => _showCreditDialog(context),
             style: TextButton.styleFrom(
               foregroundColor: const Color(0xFF1F2A74),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

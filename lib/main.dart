@@ -1,23 +1,33 @@
-import 'package:event_management/screen/homescreen.dart';
 import 'package:flutter/material.dart';
 
+import 'package:event_management/screens/event_dropdown_screen.dart';
+import 'package:event_management/screen/homescreen.dart';
 
-
-void main() {
-  runApp(const MyApp());
+void
+    main() {
+  runApp(
+      const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp
+    extends StatelessWidget {
+  const MyApp(
+      {super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
+  Widget
+      build(BuildContext context) {
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LandingPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const EventDropdownScreen(),
+        '/home': (context) => const ServingMenuUI(),
+      },
     );
   }
 }
+
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -320,3 +330,4 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 }
+

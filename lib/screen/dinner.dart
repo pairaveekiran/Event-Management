@@ -1,45 +1,68 @@
 import 'package:event_management/screen/homescreen.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:event_management/widgets/app_credit_footer.dart';
+import 'package:event_management/screens/meal_scan_screen.dart';
 
+class Dinner
+    extends StatefulWidget {
+  const Dinner(
+      {super.key,
+      this.categoryId,
+      this.categoryTitle,
+      this.categoryDate,
+      this.categoryVenue});
 
-
-class Dinner extends StatefulWidget {
-  const Dinner({super.key});
+  final int?
+      categoryId;
+  final String?
+      categoryTitle;
+  final String?
+      categoryDate;
+  final String?
+      categoryVenue;
 
   @override
-  State<Dinner> createState() => _DinnerState();
+  State<Dinner> createState() =>
+      _DinnerState();
 }
 
-class _DinnerState extends State<Dinner> {
-  final MobileScannerController controller = MobileScannerController();
+class _DinnerState
+    extends State<Dinner> {
+  String
+      dinnerName =
+      "";
 
-  String dinnerName = "";
-
-  @override
-  void initState() {
-    super.initState();
-    controller.start();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  void goToMainPage() {
+  void
+      goToMainPage() {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => const ServingMenuUI(),
+        builder: (context) => ServingMenuUI(
+          categoryId: widget.categoryId,
+          categoryTitle: widget.categoryTitle,
+          categoryDate: widget.categoryDate,
+          categoryVenue: widget.categoryVenue,
+        ),
       ),
       (route) => false,
     );
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget
+      build(BuildContext context) {
+    final String
+        headerTitle =
+        widget.categoryTitle ?? "Alliance Leadership Development Institute(ALDI)-2026";
+    final String headerDate = (widget.categoryDate?.trim().isNotEmpty ?? false)
+        ? widget.categoryDate!.trim()
+        : "Date not available";
+    final String headerVenue = (widget.categoryVenue?.trim().isNotEmpty ?? false)
+        ? widget.categoryVenue!.trim()
+        : "Venue not available";
+    final String
+        headerDateVenue =
+        '$headerDate, $headerVenue';
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
         if (details.delta.dx > 15) {
@@ -48,12 +71,11 @@ class _DinnerState extends State<Dinner> {
       },
       child: Scaffold(
         backgroundColor: const Color(0xFFFFFFFF),
-
+        bottomNavigationBar: const AppCreditFooter(),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
-
                 // ================= HEADER =================
                 Container(
                   width: double.infinity,
@@ -64,45 +86,69 @@ class _DinnerState extends State<Dinner> {
                     left: 12,
                     right: 12,
                   ),
-                  child: const Column(
+                  child: Column(
                     children: [
-                      Text(
-                        "Association of Alliance Clubs International",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          IconButton(
+                            onPressed: goToMainPage,
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            tooltip: 'Back',
+                          ),
+                          const SizedBox(width: 8),
+                          const Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Association of Alliance Clubs International",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                SizedBox(height: 3),
+                                Text(
+                                  "District 1055, Nepal",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 28),
+                        ],
                       ),
-                      SizedBox(height: 3),
-                      Text(
-                        "District 1055, Nepal",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          "Alliance Leadership Development Institute(ALDI)-2026",
+                          headerTitle,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.yellow,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text(
-                        "2026-06-06, Kahukot Resort, Kahudanda",
+                        headerDateVenue,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
                         ),
@@ -114,8 +160,15 @@ class _DinnerState extends State<Dinner> {
                 Container(height: 4, color: Colors.yellow),
 
                 const SizedBox(height: 20),
+                Text(
+                  headerDateVenue,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
 
-                // ================= LOGOS =================
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Row(
@@ -126,13 +179,14 @@ class _DinnerState extends State<Dinner> {
                         height: 70,
                         width: 70,
                       ),
+                     
                       Image.asset(
-                        "assets/images/flag.png",
+                        "assets/images/international_logo.png",
                         height: 70,
                         width: 70,
                       ),
-                      Image.asset(
-                        "assets/images/international_logo.png",
+                       Image.asset(
+                        "assets/images/flag.png",
                         height: 70,
                         width: 70,
                       ),
@@ -157,7 +211,6 @@ class _DinnerState extends State<Dinner> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       // TITLE
                       const Center(
                         child: Text(
@@ -180,43 +233,10 @@ class _DinnerState extends State<Dinner> {
 
                       const SizedBox(height: 30),
 
-                      // ================= QR SCANNER =================
-                      Container(
-                        height: 340,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          border: Border.all(color: Colors.black54),
-                        ),
-                        child: MobileScanner(
-                          controller: controller,
-                          onDetect: (capture) {
-                            final barcodes = capture.barcodes;
-
-                            for (final barcode in barcodes) {
-                              setState(() {
-                                dinnerName = barcode.rawValue ?? "";
-                              });
-                            }
-                          },
-                        ),
-                      ),
-
-                      const SizedBox(height: 30),
-
-                      const Text(
-                        "Name:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      Text(
-                        dinnerName,
-                        style: const TextStyle(fontSize: 20),
+                      MealScanScreen(
+                        mealType: 'DC',
+                        eventId: widget.categoryId ?? 0,
+                        accentColor: const Color(0xFF0288d1),
                       ),
                     ],
                   ),

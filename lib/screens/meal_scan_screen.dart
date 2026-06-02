@@ -14,6 +14,8 @@ class MealScanScreen
       accentColor;
   final bool
       showDrinksCount;
+  final bool
+      scannerEnabled;
 
   const MealScanScreen({
     required this.mealType,
@@ -21,6 +23,8 @@ class MealScanScreen
     required this.accentColor,
     this.showDrinksCount =
         false,
+    this.scannerEnabled =
+        true,
     super.key,
   });
 
@@ -121,6 +125,10 @@ class _MealScanScreenState
 
   void _onQRDetected(
       BarcodeCapture capture) async {
+    if (!widget.scannerEnabled) {
+      return;
+    }
+
     // STEP 1: Guard — ignore if already scanned or processing
     if (_hasScanned ||
         _isProcessing) {

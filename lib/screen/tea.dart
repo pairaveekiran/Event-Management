@@ -1,6 +1,5 @@
 import 'package:event_management/screen/homescreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:event_management/widgets/app_credit_footer.dart';
 import 'package:event_management/services/event_service.dart';
 import 'package:event_management/screens/meal_scan_screen.dart';
@@ -90,7 +89,7 @@ class _TeaState
       builder: (dialogContext) => StatefulBuilder(
         builder: (dialogContext, setDialogState) {
           Future<void> submitManualEntry() async {
-            final String memberId = controller.text.trim();
+            final String memberId = controller.text.trim().split('-').first.trim();
             if (memberId.isEmpty) {
               setDialogState(() {
                 errorText = 'Member ID cannot be empty.';
@@ -184,10 +183,7 @@ class _TeaState
                     controller: controller,
                     autofocus: true,
                     enabled: !_isManualEntryLoading,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
+                    keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Enter Member ID',
                       hintText: 'Enter Member ID',

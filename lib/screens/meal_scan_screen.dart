@@ -84,7 +84,6 @@ class _MealScanScreenState
         _isCheckingPermission = false;
         _permissionMessage = null;
       });
-      await _cameraController.start();
       return;
     }
 
@@ -102,7 +101,6 @@ class _MealScanScreenState
         _isCheckingPermission = false;
         _permissionMessage = null;
       });
-      await _cameraController.start();
       return;
     }
 
@@ -472,6 +470,7 @@ class _MealScanScreenState
   Widget
       build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(

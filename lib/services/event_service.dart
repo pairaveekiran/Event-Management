@@ -141,14 +141,7 @@ class EventService {
 
       final MealOrderResponse parsedResponse = MealOrderResponse.fromJson(decodedBody);
 
-      return MealOrderResponse(
-        status: response.statusCode == 200,
-        message: parsedResponse.message,
-        userName: parsedResponse.userName,
-        drinksCount: parsedResponse.drinksCount,
-        membershipNo: parsedResponse.membershipNo,
-        mealType: parsedResponse.mealType,
-      );
+      return parsedResponse;
     } on FormatException catch (error) {
       throw Exception('Unable to parse the meal order response: ${error.message}');
     } on http

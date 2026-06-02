@@ -249,6 +249,92 @@ class _LunchState
                         eventId: widget.categoryId ?? 0,
                         accentColor: const Color(0xFF7b1fa2),
                       ),
+                      const SizedBox(height: 20,),
+                     Center(
+                       child: ElevatedButton(onPressed: (){
+                        showDialog(
+                      
+                         context: context,
+                         builder: (context) => AlertDialog(
+                          backgroundColor: Colors.white,
+                           shape: RoundedRectangleBorder(
+                             borderRadius: BorderRadius.circular(20),
+                             
+                           ),
+                           content: SizedBox(
+                             width: 350,
+                             child: Column(
+                               mainAxisSize: MainAxisSize.min,
+                               children: [
+                                 const Text(
+                                   "Manual Entry",
+                                   style: TextStyle(
+                                     fontSize: 24,
+                                     fontWeight: FontWeight.bold,
+                                     color:  Color(0xFF1E2A8A),
+                                   ),
+                                 ),
+                       
+                                 const SizedBox(height: 20),
+                       
+                                 TextField(
+                                   decoration: InputDecoration(
+                                
+                                     labelText: "Member ID",
+                                     border: OutlineInputBorder(
+                                       borderRadius: BorderRadius.circular(12),
+                                     ),
+                                     prefixIcon: const Icon(Icons.badge),
+                                   ),
+                                   keyboardType: TextInputType.number,
+                                 ),
+                       
+                                 const SizedBox(height: 20),
+                       
+                                 SizedBox(
+                                   width: double.infinity,
+                                   height: 50,
+                                   child: ElevatedButton(
+                                     onPressed: () {
+                                       // Search Member
+                                     },
+                                     style: ElevatedButton.styleFrom(
+                                       backgroundColor: const Color(0xFF1E2A8A),
+                                       shape: RoundedRectangleBorder(
+                                         borderRadius: BorderRadius.circular(12),
+                                       ),
+                                     ),
+                                     child: const Text(
+                                       "SUBMIT",
+                                       style: TextStyle(
+                                         color: Colors.white,
+                                         fontSize: 18,
+                                         fontWeight: FontWeight.bold,
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                       
+                                 const SizedBox(height: 5),
+                       
+                                 TextButton(
+                                   onPressed: () => Navigator.pop(context),
+                                   child: const Text("Cancel"),
+                                 ),
+                               ],
+                             ),
+                           ),
+                         ),
+                       );
+                       },style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF1E2A8A),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8), ), elevation: 5,
+                       ), child: const Text('Manual Entry',
+                       style: TextStyle(color: Colors.white,
+                       fontSize: 18,
+                       fontWeight: FontWeight.bold,
+                       letterSpacing: 2,),)),
+                     )
                     ],
                   ),
                 ),

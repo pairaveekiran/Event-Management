@@ -14,7 +14,7 @@ class AppCreditFooter
       builder: (context) {
         return AlertDialog(
           title: const Text('Powered by Websoft Technologies Nepal'),
-          content: const Text('Website: https://sanjoggodar.com.np/'),
+          content: const Text('Website: https://www.websoftnepal.com.np/'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
